@@ -5,6 +5,8 @@ import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -37,42 +39,45 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
+  // const location = useLocation();
+  // //const cat = location.pathname.split("/")[1];
+  // const [filters, setFilters] = useState({});
+  // const handleFilters = (e) => {
+  //   const value = e.target.value;
+  //   setFilters({
+  //     ...filters,
+  //     [e.target.name]: value,
+  //   });
+  // };
+
   return (
     <Container>
       <Navbar />
       <Announcement />
-      <Title>Dresses</Title>
+      <Title>Trang phục</Title>
       <FilterContainer>
         <Filter>
-          <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option disabled selected>
-              Color
-            </Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
+          <FilterText>Lọc:</FilterText>
+          <Select name="color">
+            <Option disabled>Color</Option>
+            <Option>Trắng</Option>
+            <Option>Đen</Option>
+            <Option>Xanh</Option>
           </Select>
-          <Select>
-            <Option disabled selected>
-              Size
-            </Option>
+          <Select name="size">
+            <Option disabled>Size</Option>
             <Option>XS</Option>
             <Option>S</Option>
             <Option>M</Option>
             <Option>L</Option>
-            <Option>XL</Option>
           </Select>
         </Filter>
         <Filter>
-          <FilterText>Sort Products:</FilterText>
+          <FilterText>Sắp Xếp:</FilterText>
           <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+            <Option selected>Mới nhất</Option>
+            <Option>Giá (tăng dần)</Option>
+            <Option>Giá (giảm dần)</Option>
           </Select>
         </Filter>
       </FilterContainer>

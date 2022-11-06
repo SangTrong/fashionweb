@@ -2,22 +2,22 @@ export const sliderItems = [
   {
     id: 1,
     img: "https://bit.ly/3DlNMdZ",
-    title: "SUMMER SALE",
-    desc: " DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    title: "HÈ SÔI ĐỘNG!",
+    desc: " ĐỪNG LO LẮNG VỀ VIỆC PHẢI MẶC GÌ, ĐẾN VỚI A-FASHION ĐỂ NHẬN ƯU ĐÃI NGAY NÀO!",
     bg: "#A2CDE6",
   },
   {
     id: 2,
     img: "https://bit.ly/3TOlmQ9",
-    title: "AUTUMN SALE",
-    desc: " DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    title: "THU ẤM ÁP!",
+    desc: "ĐỪNG LO LẮNG VỀ VIỆC PHẢI MẶC GÌ, ĐẾN VỚI A-FASHION ĐỂ NHẬN ƯU ĐÃI NGAY NÀO!",
     bg: "#E67C7C",
   },
   {
     id: 3,
     img: "https://bit.ly/3Tvc0ZZ",
-    title: "WINTER SALE",
-    desc: "  DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+    title: "ĐÔNG TƯƠI MÁT!",
+    desc: " ĐỪNG LO LẮNG VỀ VIỆC PHẢI MẶC GÌ, ĐẾN VỚI A-FASHION ĐỂ NHẬN ƯU ĐÃI NGAY NÀO!",
     bg: "#D9B1E6",
   },
 ];

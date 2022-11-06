@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+
+// const Container = {marginTop: 20, backgroundColor: 'blue'}
+// <div style={Container} /> thay vi dung the div ta co the dung the do ta dinh nghia
 const Container = styled.div`
   height: 30px;
   background-color: teal;

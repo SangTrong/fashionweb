@@ -1,9 +1,11 @@
-import { Add, Remove } from "@material-ui/icons";
+//import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
+import "antd/dist/antd.min.css";
+import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 
 const Container = styled.div``;
@@ -86,22 +88,26 @@ const AddContainer = styled.div`
   ${mobile({ width: "100%" })}
 `;
 
-const AmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-`;
+// const AmountContainer = styled.div`
+//   /* display: flex;
+//   align-items: center;
+//   font-weight: 700; */
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 20px;
+//   display: flex;
+// `;
 
-const Amount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
-`;
+// const Amount = styled.span`
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 10px;
+//   border: 1px solid teal;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin: 0px 5px;
+// `;
 
 const Button = styled.button`
   padding: 15px;
@@ -113,6 +119,9 @@ const Button = styled.button`
     background-color: #f8f4f4;
   }
 `;
+const onChange = (value) => {
+  console.log("changed", value);
+};
 
 const Product = () => {
   return (
@@ -124,13 +133,14 @@ const Product = () => {
           <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>Quần bò ống rộng nữ cạp cao CHERRY</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            Quần bò ống rộng nữ cạp cao CHERRY quần jeans ống rộng lưng cao, vải
+            bò dày đẹp , không giãn ,dáng suông T008. Quần bò ống rộng nữ cạp
+            cao CHERRY rất phù hợp với môi trường đi chơi, dự tiệc, sinh nhật,
+            tập gym Quần bò ống rộng nữ cạp cao CHERRY có độ dài vừa phải tạo
+            dáng vẻ dễ thương nhưng không kém phần thanh lịch. sản phẩm được
+            thiết kế tỉ mi từng đường kim mũi chỉ đạt tiêu chuẩn xuất khẩu
           </Desc>
           <Price>$ 20</Price>
           <FilterContainer>
@@ -152,12 +162,22 @@ const Product = () => {
             </Filter>
           </FilterContainer>
           <AddContainer>
-            <AmountContainer>
+            {/* <AmountContainer>
               <Remove />
               <Amount>1</Amount>
-              <Add />
-            </AmountContainer>
-            <Button>ADD TO CART</Button>
+              <Add /> 
+              
+            </AmountContainer> */}
+            <Space>
+              <InputNumber
+                size="large"
+                min={1}
+                max={10}
+                defaultValue={3}
+                onChange={onChange}
+              />
+            </Space>
+            <Button>THÊM VÀO GIỎ</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

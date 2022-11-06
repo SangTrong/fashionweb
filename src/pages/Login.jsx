@@ -61,13 +61,13 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>ĐĂNG NHẬP</Title>
         <Form>
           <Input placeholder="username" />
           <Input placeholder="password" />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Button style={{ marginLeft: "5.3cm" }}>ĐĂNG NHẬP</Button>
+          <Link>BẠN QUÊN MẬT KHẨU?</Link>
+          <Link>TẠO TÀI KHOẢN MỚI</Link>
         </Form>
       </Wrapper>
     </Container>

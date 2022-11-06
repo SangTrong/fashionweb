@@ -12,6 +12,7 @@ import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
+  background-color: #f7f4f4;
   ${mobile({ flexDirection: "column" })}
 `;
 
@@ -87,11 +88,11 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>LAMA.</Logo>
+        <Logo>A-FASHION</Logo>
         <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
+          "Đặt sự hài lòng của khách hàng là ưu tiên số 1 trong mọi suy nghĩ
+          hành động của mình" là sứ mệnh, là triết lý, là chiến lược... Hãy luôn
+          cùng "AFASHION" tiến bước nhé!
         </Desc>
         <SocialContainer>
           <SocialIcon color="3B5999">
@@ -109,31 +110,31 @@ const Footer = () => {
         </SocialContainer>
       </Left>
       <Center>
-        <Title>Useful Links</Title>
+        <Title>Trong Cửa Hàng</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>Trang Chủ</ListItem>
+          <ListItem>Giỏ Hàng</ListItem>
+          <ListItem>Thời Trang Nam</ListItem>
+          <ListItem>Thời Trang Nữ</ListItem>
+          <ListItem>Phụ Kiện</ListItem>
+          <ListItem>Tài Khoản</ListItem>
+          <ListItem>Theo Dõi Đơn Hàng</ListItem>
+          <ListItem>Danh Sách Yêu Thích</ListItem>
+          <ListItem>Tuyển Dụng</ListItem>
+          <ListItem>Tin Tức</ListItem>
         </List>
       </Center>
       <Right>
-        <Title>Contact</Title>
+        <Title>Liên hệ</Title>
         <ContactItem>
-          <Room style={{ marginRight: "10px" }} /> 622 Dixie Path , South
-          Tobinchester 98336
+          <Room style={{ marginRight: "10px" }} /> 622 Tô Ký, Tân Chánh Hiệp,
+          Quận 12, TP Hồ Chí Minh
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
+          <Phone style={{ marginRight: "10px" }} /> +84 934946704
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{ marginRight: "10px" }} /> contact@lama.dev
+          <MailOutline style={{ marginRight: "10px" }} /> trongpz111@gmail.com
         </ContactItem>
         <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>

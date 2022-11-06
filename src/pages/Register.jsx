@@ -57,19 +57,19 @@ const Register = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
+        <Title>TẠO MỘT TÀI KHOẢN</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
+          <Input placeholder="tên" />
+          <Input placeholder="họ" />
+          <Input placeholder="tên người dùng" />
           <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input placeholder="mật khẩu" />
+          <Input placeholder="nhập lại mật khẩu" />
           <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
+            Bằng cách tạo một tài khoản, tôi đồng ý với việc xử lý dữ liệu phù
+            hợp với <b> CHÍNH SÁCH BẢO MẬT </b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button>ĐĂNG KÝ</Button>
         </Form>
       </Wrapper>
     </Container>

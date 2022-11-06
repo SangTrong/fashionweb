@@ -4,7 +4,7 @@ import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 60vh;
-  background-color: #fcf5f5;
+  background-color: #e1f6fb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,10 +48,10 @@ const Button = styled.button`
 const Newsletter = () => {
   return (
     <Container>
-      <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favorite products.</Desc>
+      <Title>Tin Nổi Bật</Title>
+      <Desc>Nhận thông tin kịp thời từ những sản phẩm yêu thích của bạn.</Desc>
       <InputContainer>
-        <Input placeholder="Your email" />
+        <Input placeholder="Email của bạn..." />
         <Button>
           <Send />
         </Button>

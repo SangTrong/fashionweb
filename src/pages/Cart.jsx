@@ -1,11 +1,16 @@
-import { Add, Remove } from "@material-ui/icons";
+//import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import "antd/dist/antd.min.css";
+import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
-const Container = styled.div``;
+const Container = styled.div`
+  font-family: Arial;
+`;
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -101,11 +106,11 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
-`;
+// const ProductAmount = styled.div`
+//   font-size: 24px;
+//   margin: 5px;
+//   ${mobile({ margin: "5px 15px" })}
+// `;
 
 const ProductPrice = styled.div`
   font-size: 30px;
@@ -150,6 +155,9 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+const onChange = (value) => {
+  console.log("changed", value);
+};
 
 const Cart = () => {
   return (
@@ -157,14 +165,16 @@ const Cart = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <Title>YOUR CART</Title>
+        <Title>GIỎ HÀNG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/products" style={{ color: "black" }}>
+            <TopButton>TIẾP TỤC MUA HÀNG</TopButton>
+          </Link>
           <TopTexts>
-            <TopText>Shopping Cart(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText>Giỏ hàng của bạn(2)</TopText>
+            <TopText>Sản phẩm yêu thích(0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type="filled">THANH TOÁN</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -173,7 +183,7 @@ const Cart = () => {
                 <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
                 <Details>
                   <ProductName>
-                    <b>Product:</b> JESSIE THUNDER SHOES
+                    <b>Sản phẩm:</b> GIÀY PUKATA
                   </ProductName>
                   <ProductId>
                     <b>ID:</b> 93813718293
@@ -186,11 +196,25 @@ const Cart = () => {
               </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <Add />
+                  {/* <Add />
                   <ProductAmount>2</ProductAmount>
-                  <Remove />
+                  <Remove /> */}
+                  <Space>
+                    <InputNumber
+                      //size="small"
+                      min={1}
+                      max={10}
+                      defaultValue={1}
+                      onChange={onChange}
+                      style={{
+                        color: "black",
+                        fontWeight: "bold",
+                        paddingLeft: "15px",
+                      }}
+                    />
+                  </Space>
                 </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
+                <ProductPrice>40.000đ</ProductPrice>
               </PriceDetail>
             </Product>
             <Hr />
@@ -199,7 +223,7 @@ const Cart = () => {
                 <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
                 <Details>
                   <ProductName>
-                    <b>Product:</b> HAKURA T-SHIRT
+                    <b>Sản phẩm:</b> Áo thun rộng
                   </ProductName>
                   <ProductId>
                     <b>ID:</b> 93813718293
@@ -212,33 +236,47 @@ const Cart = () => {
               </ProductDetail>
               <PriceDetail>
                 <ProductAmountContainer>
-                  <Add />
+                  {/* <Add />
                   <ProductAmount>1</ProductAmount>
-                  <Remove />
+                  <Remove /> */}
+                  <Space>
+                    <InputNumber
+                      //size="large"
+                      min={1}
+                      max={10}
+                      defaultValue={1}
+                      onChange={onChange}
+                      style={{
+                        color: "black",
+                        fontWeight: "bold",
+                        paddingLeft: "15px",
+                      }}
+                    />
+                  </Space>
                 </ProductAmountContainer>
-                <ProductPrice>$ 20</ProductPrice>
+                <ProductPrice>50.000đ</ProductPrice>
               </PriceDetail>
             </Product>
           </Info>
           <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryTitle>Đơn Đặt Hàng</SummaryTitle>
             <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemText>Tạm Tính</SummaryItemText>
+              <SummaryItemPrice>90.000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Phí giao hàng</SummaryItemText>
+              <SummaryItemPrice>15.000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Freeship</SummaryItemText>
+              <SummaryItemPrice>15.000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemText>Tổng Cộng</SummaryItemText>
+              <SummaryItemPrice>90.000đ</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button>THANH TOÁN NGAY</Button>
           </Summary>
         </Bottom>
       </Wrapper>

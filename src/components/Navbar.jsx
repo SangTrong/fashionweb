@@ -1,11 +1,13 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 60px;
+
   ${mobile({ height: "60px" })}
 `;
 
@@ -25,6 +27,7 @@ const Left = styled.div`
 
 const Language = styled.span`
   font-size: 14px;
+  margin-bottom: 15px;
   cursor: pointer;
   ${mobile({ display: "none" })}
 `;
@@ -34,11 +37,13 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: 25px;
+  margin-bottom: 15px;
   padding: 5px;
 `;
 
 const Input = styled.input`
   border: none;
+  outline: 0; //delete border when search
   ${mobile({ width: "40px" })}
 `;
 
@@ -71,9 +76,9 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
+          <Language>VN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input placeholder="Tìm kiếm..." />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
@@ -81,12 +86,22 @@ const Navbar = () => {
           <Logo>A-FASHION</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          <Link to="/register">
+            <MenuItem style={{ color: "black" }}>ĐĂNG KÝ</MenuItem>
+          </Link>
+          <Link to="/login">
+            <MenuItem style={{ color: "black" }}>ĐĂNG NHẬP</MenuItem>
+          </Link>
           <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
+            <Link to="/cart">
+              <Badge
+                badgeContent={4}
+                color="primary"
+                style={{ color: "black" }}
+              >
+                <ShoppingCartOutlined />
+              </Badge>
+            </Link>
           </MenuItem>
         </Right>
       </Wrapper>
