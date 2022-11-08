@@ -55,6 +55,7 @@ const Link = styled.a`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  color: black;
 `;
 
 const Login = () => {

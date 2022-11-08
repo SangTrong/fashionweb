@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import "antd/dist/antd.min.css";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
@@ -117,7 +118,17 @@ const ProductPrice = styled.div`
   font-weight: 200;
   ${mobile({ marginBottom: "20px" })}
 `;
-
+const Delete = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 60px 20px;
+  height: "40px";
+  cursor: pointer;
+  :hover {
+    color: #d81727;
+  }
+`;
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -216,6 +227,15 @@ const Cart = () => {
                 </ProductAmountContainer>
                 <ProductPrice>40.000đ</ProductPrice>
               </PriceDetail>
+              <Delete>
+                <DeleteForeverIcon
+                  style={{
+                    width: "30px",
+                    height: "40px",
+                    margin: "30px",
+                  }}
+                />
+              </Delete>
             </Product>
             <Hr />
             <Product>
@@ -256,6 +276,15 @@ const Cart = () => {
                 </ProductAmountContainer>
                 <ProductPrice>50.000đ</ProductPrice>
               </PriceDetail>
+              <Delete>
+                <DeleteForeverIcon
+                  style={{
+                    width: "30px",
+                    height: "40px",
+                    margin: "30px",
+                  }}
+                />
+              </Delete>
             </Product>
           </Info>
           <Summary>
