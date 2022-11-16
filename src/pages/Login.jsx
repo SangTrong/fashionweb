@@ -48,6 +48,10 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  margin-left: 5.3cm;
+  ${mobile({
+    marginLeft: 0,
+  })}
 `;
 
 const Link = styled.a`
@@ -66,7 +70,9 @@ const Login = () => {
         <Form>
           <Input placeholder="username" />
           <Input placeholder="password" />
-          <Button style={{ marginLeft: "5.3cm" }}>ĐĂNG NHẬP</Button>
+
+          <Button>ĐĂNG NHẬP</Button>
+
           <Link>BẠN QUÊN MẬT KHẨU?</Link>
           <Link>TẠO TÀI KHOẢN MỚI</Link>
         </Form>

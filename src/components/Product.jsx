@@ -23,9 +23,12 @@ const Info = styled.div`
 `;
 
 const Container = styled.div`
+  /* width: 25%;
+  height: 25%; */
   flex: 1;
   margin: 5px;
   min-width: 280px;
+  max-width: 350px;
   height: 350px;
   display: flex;
   align-items: center;
@@ -67,15 +70,36 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  //const [ListCategories, setListCategories] = useState([]);
+  //   useEffect(() => {
+  //   const getUserAPI = 'http://localhost:8000/admin/catogories/indexAPI'
+  //     axios
+  //       .get(getUserAPI)
+  //       .then((response) => {
+  //         setListCategories(response.data);
+  //       })
+  //       .catch( (error)=> {
+  //         console.log(error);
+  //         alert("Xảy ra lỗi");
+  //       });
+  //   }, []);
+  //   return (
+  //     <Container>
+  //       {ListCategories.map((Cat) => {
+  //         <ListItems> {Cat.name}</ListItems>;
+  //       })}
+  //     </Container>
+  //   );
+  // };
   return (
     <Container>
       <Circle />
-      <Image src={item.img} />
+      <Image src={`http://localhost:8000${item?.feature_image_path}`} />
       <Info>
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
-        <Link to="/product" style={{ color: "black" }}>
+        <Link to={`/product/${item.id}`} style={{ color: "black" }}>
           <Icon>
             <SearchOutlined />
           </Icon>

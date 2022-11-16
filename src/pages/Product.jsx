@@ -5,8 +5,17 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import "antd/dist/antd.min.css";
+import {
+  Alarm,
+  LocalShipping,
+  Replay5,
+  MonetizationOn,
+} from "@material-ui/icons";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
+import { useLocation, useParams } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -22,7 +31,7 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 90vh;
+  height: 65vh;
   object-fit: cover;
   ${mobile({ height: "40vh" })}
 `;
@@ -43,11 +52,11 @@ const Desc = styled.p`
 
 const Price = styled.span`
   font-weight: 100;
-  font-size: 40px;
+  font-size: 30px;
 `;
 
 const FilterContainer = styled.div`
-  width: 50%;
+  width: 80%;
   margin: 30px 0px;
   display: flex;
   justify-content: space-between;
@@ -81,7 +90,7 @@ const FilterSize = styled.select`
 const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
-  width: 50%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,27 +131,82 @@ const Button = styled.button`
 const onChange = (value) => {
   console.log("changed", value);
 };
+const InfoShop = styled.div``;
+const Commit = styled.div``;
+const CommitTitle = styled.div`
+  background: #f6f6f6 none repeat scroll 0 0;
+  border: 1px solid #eaeaea;
+  font-weight: bold;
+  height: 50px;
+  line-height: 50px;
+  margin-bottom: 7px;
+  text-align: center;
+  font-size: 12px;
+`;
+const CommitContent = styled.div`
+  background: #f6f6f6 none repeat scroll 0 0;
+  clear: both;
+  display: table;
+  padding-bottom: 8px;
+  padding-right: 5px;
+  padding-top: 8px;
+  width: 296px;
+  ${mobile({ margin: "auto" })}
+`;
+
+const WrapCommitContent = styled.div`
+  margin: 10px;
+`;
+const WrapIcon = styled.div`
+  //justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+`;
+
+const Detail = styled.div`
+  margin-left: 8px;
+`;
+const ImageMin = styled.img`
+  height: 235px;
+  width: 296px;
+  padding-top: 8px;
+  object-fit: cover;
+  ${mobile({ marginLeft: "30px" })}
+`;
 
 const Product = () => {
+  const [product, setProduct] = useState({});
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  // console.log(id);
+
+  useEffect(() => {
+    const getUserAPI = `http://localhost:8000/api/product/list/${id}`;
+    axios
+      .get(getUserAPI)
+      .then((response) => {
+        setProduct(response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Xảy ra lỗi");
+      });
+  }, []);
+
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={`http://localhost:8000${product?.feature_image_path}`} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Quần bò ống rộng nữ cạp cao CHERRY</Title>
-          <Desc>
-            Quần bò ống rộng nữ cạp cao CHERRY quần jeans ống rộng lưng cao, vải
-            bò dày đẹp , không giãn ,dáng suông T008. Quần bò ống rộng nữ cạp
-            cao CHERRY rất phù hợp với môi trường đi chơi, dự tiệc, sinh nhật,
-            tập gym Quần bò ống rộng nữ cạp cao CHERRY có độ dài vừa phải tạo
-            dáng vẻ dễ thương nhưng không kém phần thanh lịch. sản phẩm được
-            thiết kế tỉ mi từng đường kim mũi chỉ đạt tiêu chuẩn xuất khẩu
-          </Desc>
-          <Price>$ 20</Price>
+          <Title>{product?.name}</Title>
+          <Desc>{product?.content}</Desc>
+          <Price>{product?.price} VND</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -153,11 +217,11 @@ const Product = () => {
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
+                <FilterSizeOption>{product?.size}</FilterSizeOption>
+                {/* <FilterSizeOption>S</FilterSizeOption>
                 <FilterSizeOption>M</FilterSizeOption>
                 <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                <FilterSizeOption>XL</FilterSizeOption> */}
               </FilterSize>
             </Filter>
           </FilterContainer>
@@ -180,6 +244,39 @@ const Product = () => {
             <Button>THÊM VÀO GIỎ</Button>
           </AddContainer>
         </InfoContainer>
+        <InfoShop>
+          <Commit>
+            <CommitTitle>CAM KẾT KHI MUA HÀNG TẠI A-FASHION</CommitTitle>
+            <CommitContent>
+              <WrapCommitContent>
+                <WrapIcon>
+                  <Alarm style={{ fontSize: "1,5rem" }} />
+                  <Detail>
+                    Nhận hàng trong vòng 12 giờ tại HCM và 48 giờ tại các tỉnh
+                    thành khác
+                  </Detail>
+                </WrapIcon>
+                <WrapIcon>
+                  <LocalShipping style={{ fontSize: "1,5rem" }} />
+                  <Detail>Giao hàng miễn phí trên toàn Quốc</Detail>
+                </WrapIcon>
+                <WrapIcon>
+                  <Replay5 style={{ fontSize: "1,5rem" }} />
+                  <Detail>
+                    Được đổi trả trong vòng 7 ngày (Xem chính sách đổi trả)
+                  </Detail>
+                </WrapIcon>
+                <WrapIcon>
+                  <MonetizationOn style={{ fontSize: "1,5rem" }} />
+                  <Detail>Giảm giá 20% cho đơn hàng đầu tiên</Detail>
+                </WrapIcon>
+              </WrapCommitContent>
+            </CommitContent>
+            <ImageMin
+              src={`http://localhost:8000${product?.feature_image_path}`}
+            />
+          </Commit>
+        </InfoShop>
       </Wrapper>
       <Newsletter />
       <Footer />

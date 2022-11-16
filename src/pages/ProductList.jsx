@@ -21,12 +21,14 @@ const FilterContainer = styled.div`
 
 const Filter = styled.div`
   margin: 20px;
+
   ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
 `;
 
 const FilterText = styled.span`
   font-size: 20px;
   font-weight: 600;
+
   margin-right: 20px;
   ${mobile({ marginRight: "0px" })}
 `;
@@ -37,36 +39,46 @@ const Select = styled.select`
   ${mobile({ margin: "10px 0px" })}
 `;
 const Option = styled.option``;
-
 const ProductList = () => {
-  // const location = useLocation();
-  // //const cat = location.pathname.split("/")[1];
-  // const [filters, setFilters] = useState({});
-  // const handleFilters = (e) => {
-  //   const value = e.target.value;
-  //   setFilters({
-  //     ...filters,
-  //     [e.target.name]: value,
-  //   });
-  // };
+  const location = useLocation();
+  const cat = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("newest");
+
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
+  };
 
   return (
     <Container>
       <Navbar />
-      <Announcement />
-      <Title>Trang phục</Title>
+      <Announcement style={{ marginTop: "70px" }} />
+      <Filter>
+        <FilterText>Quần Áo:</FilterText>
+        <Select>
+          <Option>None</Option>
+          <Option>Nam</Option>
+          <Option>Nữ</Option>
+        </Select>
+      </Filter>
       <FilterContainer>
         <Filter>
           <FilterText>Lọc:</FilterText>
-          <Select name="color">
+          <Select name="color" onChange={handleFilters}>
             <Option disabled>Color</Option>
+            <Option>None</Option>
             <Option>Trắng</Option>
             <Option>Đen</Option>
             <Option>Xanh</Option>
           </Select>
-          <Select name="size">
+          <Select name="size" onChange={handleFilters}>
             <Option disabled>Size</Option>
-            <Option>XS</Option>
+            <Option>None</Option>
+
             <Option>S</Option>
             <Option>M</Option>
             <Option>L</Option>
@@ -74,14 +86,14 @@ const ProductList = () => {
         </Filter>
         <Filter>
           <FilterText>Sắp Xếp:</FilterText>
-          <Select>
-            <Option selected>Mới nhất</Option>
-            <Option>Giá (tăng dần)</Option>
-            <Option>Giá (giảm dần)</Option>
+          <Select onChange={(e) => setSort(e.target.value)}>
+            <Option value="newest">Mới nhất</Option>
+            <Option value="asc">Giá (tăng dần)</Option>
+            <Option value="desc">Giá (giảm dần)</Option>
           </Select>
         </Filter>
       </FilterContainer>
-      <Products />
+      <Products cat={cat} filters={filters} sort={sort} />
       <Newsletter />
       <Footer />
     </Container>

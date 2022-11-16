@@ -20,8 +20,10 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products/" element={<ProductList />} />
-          <Route path="/product/" element={<Product />} />
+          <Route path="/products" element={<ProductList />} />
+
+          <Route path="/products/:categories" element={<ProductList />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/success"></Route>
           <Route path="/login" element={<Login />}>

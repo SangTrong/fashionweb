@@ -6,12 +6,19 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
-  height: 60px;
+  width: 100%;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  z-index: 4;
+  background-color: white;
 
   ${mobile({ height: "60px" })}
 `;
 
 const Wrapper = styled.div`
+  width: 100%;
+
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -83,7 +90,9 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>A-FASHION</Logo>
+          <Link to="/">
+            <Logo>A-FASHION</Logo>
+          </Link>
         </Center>
         <Right>
           <Link to="/register">

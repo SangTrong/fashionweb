@@ -43,13 +43,15 @@ const Button = styled.button`
 const CategoryItem = ({ item }) => {
   return (
     <Container>
-      <Image src={item.img} />
-      <Info>
-        <Title>{item.title}</Title>
-        <Link to="/products">
+      <Link to={`/products/${item.cat}`}>
+        <Image src={item.img} />
+        <Info>
+          <Title>{item.title}</Title>
+          {/* <Link to="/products"> */}
           <Button>LƯỚT XEM</Button>
-        </Link>
-      </Info>
+          {/* </Link> */}
+        </Info>
+      </Link>
     </Container>
   );
 };

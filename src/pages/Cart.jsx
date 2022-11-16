@@ -8,6 +8,8 @@ import "antd/dist/antd.min.css";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import StripeCheckout from "react-stripe-checkout";
 
 const Container = styled.div`
   font-family: Arial;
@@ -71,6 +73,8 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  height: 200px;
+  margin: 15px;
 `;
 
 const Details = styled.div`
@@ -170,7 +174,8 @@ const onChange = (value) => {
   console.log("changed", value);
 };
 
-const Cart = () => {
+const Cart = (item) => {
+  const [buttonText, setButtonText] = useState("THANH TOÁN NGAY");
   return (
     <Container>
       <Navbar />
@@ -178,7 +183,7 @@ const Cart = () => {
       <Wrapper>
         <Title>GIỎ HÀNG</Title>
         <Top>
-          <Link to="/products" style={{ color: "black" }}>
+          <Link to="/products/clothes" style={{ color: "black" }}>
             <TopButton>TIẾP TỤC MUA HÀNG</TopButton>
           </Link>
           <TopTexts>
@@ -191,7 +196,7 @@ const Cart = () => {
           <Info>
             <Product>
               <ProductDetail>
-                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
+                <Image src="http://labaha.vn/image/cache/catalog/Ao_nam/AO_so_mi/SM023/TB1ihxTxStYBeNjSspaXXaOOFXa_!!0-item_pic-800x800.jpg" />
                 <Details>
                   <ProductName>
                     <b>Sản phẩm:</b> GIÀY PUKATA
@@ -216,6 +221,7 @@ const Cart = () => {
                       min={1}
                       max={10}
                       defaultValue={1}
+                      value={item.qty}
                       onChange={onChange}
                       style={{
                         color: "black",
@@ -225,7 +231,7 @@ const Cart = () => {
                     />
                   </Space>
                 </ProductAmountContainer>
-                <ProductPrice>40.000đ</ProductPrice>
+                <ProductPrice> 40000đ</ProductPrice>
               </PriceDetail>
               <Delete>
                 <DeleteForeverIcon
@@ -240,10 +246,10 @@ const Cart = () => {
             <Hr />
             <Product>
               <ProductDetail>
-                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
+                <Image src="https://salt.tikicdn.com/cache/750x750/ts/product/15/be/4d/8388c81a1a3c40f256e9c4331cd076dd.jpg.webp" />
                 <Details>
                   <ProductName>
-                    <b>Sản phẩm:</b> Áo thun rộng
+                    <b>Sản phẩm:</b> Áo sơ mi nam
                   </ProductName>
                   <ProductId>
                     <b>ID:</b> 93813718293
@@ -274,7 +280,7 @@ const Cart = () => {
                     />
                   </Space>
                 </ProductAmountContainer>
-                <ProductPrice>50.000đ</ProductPrice>
+                <ProductPrice>50000đ</ProductPrice>
               </PriceDetail>
               <Delete>
                 <DeleteForeverIcon
@@ -291,21 +297,35 @@ const Cart = () => {
             <SummaryTitle>Đơn Đặt Hàng</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Tạm Tính</SummaryItemText>
-              <SummaryItemPrice>90.000đ</SummaryItemPrice>
+              <SummaryItemPrice>90000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Phí giao hàng</SummaryItemText>
-              <SummaryItemPrice>15.000đ</SummaryItemPrice>
+              <SummaryItemPrice>15000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Freeship</SummaryItemText>
-              <SummaryItemPrice>15.000đ</SummaryItemPrice>
+              <SummaryItemPrice>15000đ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Tổng Cộng</SummaryItemText>
-              <SummaryItemPrice>90.000đ</SummaryItemPrice>
+              <SummaryItemPrice>90000đ</SummaryItemPrice>
             </SummaryItem>
-            <Button>THANH TOÁN NGAY</Button>
+            {/* <Button onClick={() => setButtonText("ĐÃ THANH TOÁN")}>
+              {buttonText}
+            </Button> */}
+            <StripeCheckout
+              name="A-FASHION"
+              image="https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is 0D`}
+              // amount="100"
+              // token={''}
+              //stripeKey={"123"}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
