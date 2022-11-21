@@ -9,22 +9,18 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
 const Container = styled.div``;
-
 const Title = styled.h1`
   margin: 20px;
 `;
-
 const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 const Filter = styled.div`
   margin: 20px;
 
   ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
 `;
-
 const FilterText = styled.span`
   font-size: 20px;
   font-weight: 600;
@@ -32,7 +28,6 @@ const FilterText = styled.span`
   margin-right: 20px;
   ${mobile({ marginRight: "0px" })}
 `;
-
 const Select = styled.select`
   padding: 10px;
   margin-right: 20px;
@@ -52,17 +47,23 @@ const ProductList = () => {
       [e.target.name]: value,
     });
   };
-
+  const handleFilter = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
+  };
   return (
     <Container>
       <Navbar />
       <Announcement style={{ marginTop: "70px" }} />
       <Filter>
         <FilterText>Quần Áo:</FilterText>
-        <Select>
+        <Select name="name" onChange={handleFilter}>
           <Option>None</Option>
-          <Option>Nam</Option>
-          <Option>Nữ</Option>
+          <Option>Áo Sơ Mi Nam Trắng Dài tay Cổ bẻ</Option>
+          <Option>somi1.jpg</Option>
         </Select>
       </Filter>
       <FilterContainer>
@@ -71,9 +72,11 @@ const ProductList = () => {
           <Select name="color" onChange={handleFilters}>
             <Option disabled>Color</Option>
             <Option>None</Option>
-            <Option>Trắng</Option>
-            <Option>Đen</Option>
-            <Option>Xanh</Option>
+            <Option>white</Option>
+            <Option>black</Option>
+            <Option>green</Option>
+            <Option>blue</Option>
+            <Option>red</Option>
           </Select>
           <Select name="size" onChange={handleFilters}>
             <Option disabled>Size</Option>
@@ -82,6 +85,7 @@ const ProductList = () => {
             <Option>S</Option>
             <Option>M</Option>
             <Option>L</Option>
+            <Option>XL</Option>
           </Select>
         </Filter>
         <Filter>

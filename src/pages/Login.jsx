@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -63,15 +65,41 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+  const [email, setEmail] = useState([]);
+  const [password, setPassword] = useState([]);
+
+  const signUp = async () => {
+    let item = {
+      email,
+      password,
+    };
+    //console.warn(item);
+    let result = await axios.post("http://localhost:8000/api/login", item);
+    console.warn("result", result);
+    localStorage.setItem("Userinfo", JSON.stringify(result));
+    window.location.href = "/";
+  };
   return (
     <Container>
       <Wrapper>
         <Title>ĐĂNG NHẬP</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
+          <Input
+            type="email"
+            value={email}
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            value={password}
+            placeholder="mật khẩu"
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          <Button>ĐĂNG NHẬP</Button>
+          <Button type="button" onClick={signUp}>
+            ĐĂNG NHẬP
+          </Button>
 
           <Link>BẠN QUÊN MẬT KHẨU?</Link>
           <Link>TẠO TÀI KHOẢN MỚI</Link>

@@ -19,20 +19,61 @@ const Paging = styled.div`
   padding-bottom: 15px;
 `;
 const Products = ({ cat, filters, sort }) => {
-  const [ListCategories, setListCategories] = useState([]);
+  //console.log(cat, filters, sort);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // useEffect(() => {
+  //   const getUserAPI = "http://localhost:8000/api/product/list";
+  //   axios
+  //     .get(getUserAPI)
+  //     .then((response) => {
+  //       setProducts(response.data);
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       alert("Xảy ra lỗi");
+  //     });
+  // }, []);
+  const getProducts = async (current_page = 1) => {
+    try {
+      const res = await axios.get(
+        cat
+          ? `http://localhost:8000/api/product/list?category=${cat}`
+          : `http://localhost:8000/api/product/list?page=${current_page}`
+      );
+      setProducts(res.data);
+    } catch (err) {}
+  };
   useEffect(() => {
-    const getUserAPI = "http://localhost:8000/api/product/list";
-    axios
-      .get(getUserAPI)
-      .then((response) => {
-        setListCategories(response.data);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Xảy ra lỗi");
-      });
-  }, []);
+    getProducts();
+  }, [cat]);
+
+  // useEffect(() => {
+  //   cat &&
+  //     setFilteredProducts(
+  //       products?.data?.filter((item) =>
+  //         Object.entries(filters).every(([key, value]) =>
+  //           item[key].includes(value)
+  //         )
+  //       )
+  //     );
+  // }, [products, cat, filters]);
+
+  // useEffect(() => {
+  //   if (sort === "newest") {
+  //     setFilteredProducts((prev) => [...prev.data].sort((a, b) => b.id - a.id));
+  //   } else if (sort === "asc") {
+  //     setFilteredProducts((prev) =>
+  //       [...prev.data].sort((a, b) => a.price - b.price)
+  //     );
+  //   } else {
+  //     setFilteredProducts((prev) =>
+  //       [...prev.data].sort((a, b) => b.price - a.price)
+  //     );
+  //   }
+  // }, [sort]);
   //   return (
   //     <Container>
   //       {ListCategories.map((Cat) => {
@@ -41,20 +82,27 @@ const Products = ({ cat, filters, sort }) => {
   //     </Container>
   //   );
   // };
+
   return (
     <>
       <Container>
-        {ListCategories.slice(0, 8).map((item) => (
-          <Product item={item} key={item.id} />
-        ))}
+        {cat
+          ? filteredProducts.map((item) => (
+              <Product item={item} key={item.id} />
+            ))
+          : products?.data?.map((item) => (
+              <Product item={item} key={item.id} />
+            ))}
       </Container>
       <Paging>
         <Pagination
-          defaultCurrent={1}
-          total={40}
-          // showSizeChanger
-          // showQuickJumper
-          // showTotal={(total) => `Total ${total} items`}
+          defaultCurrent="1"
+          total={products?.total}
+          pageSize="4"
+          current={products?.current_page}
+          onChange={(current) => {
+            getProducts(current);
+          }}
         />
       </Paging>
     </>

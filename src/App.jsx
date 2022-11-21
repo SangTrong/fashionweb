@@ -27,10 +27,10 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/success"></Route>
           <Route path="/login" element={<Login />}>
-            {/* {user ? <Navigate to="/" /> : <Login />} */}
+            {/* {user ? <Navigate to="/" /> : <Login />}  */}
           </Route>
           <Route path="/register" element={<Register />}>
-            {/* {user ? <Navigate to="/" /> : <Register />} */}
+            {/* {user ? <Navigate to="/" /> : <Register />}  */}
           </Route>
         </Routes>
       </Router>

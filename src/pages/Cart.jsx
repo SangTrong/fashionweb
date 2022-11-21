@@ -171,7 +171,7 @@ const Button = styled.button`
   font-weight: 600;
 `;
 const onChange = (value) => {
-  console.log("changed", value);
+  //console.log("changed", value);
 };
 
 const Cart = (item) => {

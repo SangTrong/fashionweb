@@ -1,6 +1,7 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import { clear } from "@testing-library/user-event/dist/clear";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
@@ -79,6 +80,10 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("Userinfo")));
+  }, []);
   return (
     <Container>
       <Wrapper>
@@ -95,12 +100,31 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-          <Link to="/register">
-            <MenuItem style={{ color: "black" }}>ĐĂNG KÝ</MenuItem>
-          </Link>
-          <Link to="/login">
-            <MenuItem style={{ color: "black" }}>ĐĂNG NHẬP</MenuItem>
-          </Link>
+          {user ? (
+            <div>
+              <MenuItem style={{ color: "black" }}>
+                {user.data.user.name}
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  localStorage.removeItem("Userinfo");
+                  window.location.href = "/";
+                }}
+                style={{ color: "black" }}
+              >
+                logout
+              </MenuItem>
+            </div>
+          ) : (
+            <div>
+              <Link to="/register">
+                <MenuItem style={{ color: "black" }}>ĐĂNG KÝ</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem style={{ color: "black" }}>ĐĂNG NHẬP</MenuItem>
+              </Link>
+            </div>
+          )}
           <MenuItem>
             <Link to="/cart">
               <Badge

@@ -77,6 +77,7 @@ const FilterColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: 1px solid gray;
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
@@ -129,7 +130,7 @@ const Button = styled.button`
   }
 `;
 const onChange = (value) => {
-  console.log("changed", value);
+  // console.log("changed", value);
 };
 const InfoShop = styled.div``;
 const Commit = styled.div``;
@@ -177,6 +178,9 @@ const ImageMin = styled.img`
 
 const Product = () => {
   const [product, setProduct] = useState({});
+  const [color, setColor] = useState({});
+  const [size, setSize] = useState("");
+
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   // console.log(id);
@@ -187,10 +191,11 @@ const Product = () => {
       .get(getUserAPI)
       .then((response) => {
         setProduct(response.data);
-        console.log(response);
+
+        //console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
         alert("Xảy ra lỗi");
       });
   }, []);
@@ -201,27 +206,46 @@ const Product = () => {
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src={`http://localhost:8000${product?.feature_image_path}`} />
+          <Image
+            src={`http://localhost:8000${product.data?.feature_image_path}`}
+          />
         </ImgContainer>
         <InfoContainer>
-          <Title>{product?.name}</Title>
-          <Desc>{product?.content}</Desc>
-          <Price>{product?.price} VND</Price>
+          <Title>{product?.data?.name}</Title>
+
+          <Desc>
+            <div
+              dangerouslySetInnerHTML={{ __html: product?.data?.content }}
+            ></div>
+          </Desc>
+
+          <Price>
+            {Number(product?.data?.price).toLocaleString("vi-VN")}VNĐ
+          </Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+
+              {product?.color?.map((c) => (
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
+              ))}
+
+              {/* <FilterColor color="darkblue" />
+              <FilterColor color="gray" /> */}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
+              {/* <FilterSize>
                 <FilterSizeOption>{product?.size}</FilterSizeOption>
-                {/* <FilterSizeOption>S</FilterSizeOption>
+                <FilterSizeOption>S</FilterSizeOption>
                 <FilterSizeOption>M</FilterSizeOption>
                 <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption> */}
+                <FilterSizeOption>XL</FilterSizeOption>
+              </FilterSize> */}
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
@@ -273,7 +297,7 @@ const Product = () => {
               </WrapCommitContent>
             </CommitContent>
             <ImageMin
-              src={`http://localhost:8000${product?.feature_image_path}`}
+              src={`http://localhost:8000${product.data?.feature_image_path}`}
             />
           </Commit>
         </InfoShop>
