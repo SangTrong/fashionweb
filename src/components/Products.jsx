@@ -21,7 +21,7 @@ const Paging = styled.div`
 const Products = ({ cat, filters, sort }) => {
   //console.log(cat, filters, sort);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  //const [filteredProducts, setFilteredProducts] = useState([]);
 
   // useEffect(() => {
   //   const getUserAPI = "http://localhost:8000/api/product/list";
@@ -39,9 +39,7 @@ const Products = ({ cat, filters, sort }) => {
   const getProducts = async (current_page = 1) => {
     try {
       const res = await axios.get(
-        cat
-          ? `http://localhost:8000/api/product/list?category=${cat}`
-          : `http://localhost:8000/api/product/list?page=${current_page}`
+        `http://localhost:8000/api/product/list?page=${current_page}`
       );
       setProducts(res.data);
     } catch (err) {}
@@ -63,36 +61,31 @@ const Products = ({ cat, filters, sort }) => {
 
   // useEffect(() => {
   //   if (sort === "newest") {
-  //     setFilteredProducts((prev) => [...prev.data].sort((a, b) => b.id - a.id));
+  //     setFilteredProducts((prev) => [...prev].sort((a, b) => b.id - a.id));
   //   } else if (sort === "asc") {
   //     setFilteredProducts((prev) =>
-  //       [...prev.data].sort((a, b) => a.price - b.price)
+  //       [...prev].sort((a, b) => a.price - b.price)
   //     );
   //   } else {
   //     setFilteredProducts((prev) =>
-  //       [...prev.data].sort((a, b) => b.price - a.price)
+  //       [...prev].sort((a, b) => b.price - a.price)
   //     );
   //   }
   // }, [sort]);
-  //   return (
-  //     <Container>
-  //       {ListCategories.map((Cat) => {
-  //         <ListItems> {Cat.name}</ListItems>;
-  //       })}
-  //     </Container>
-  //   );
-  // };
+  // return (
+  //   <Container>
+  //     {ListCategories.map((Cat) => {
+  //       <ListItems> {Cat.name}</ListItems>;
+  //     })}
+  //   </Container>
+  // );
 
   return (
     <>
       <Container>
-        {cat
-          ? filteredProducts.map((item) => (
-              <Product item={item} key={item.id} />
-            ))
-          : products?.data?.map((item) => (
-              <Product item={item} key={item.id} />
-            ))}
+        {products?.data?.map((item) => (
+          <Product item={item} key={item.id} />
+        ))}
       </Container>
       <Paging>
         <Pagination

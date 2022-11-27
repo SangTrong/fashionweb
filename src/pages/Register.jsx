@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-//import { mobile } from "../responsive";
+// import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -56,6 +56,7 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  //const history = useHistory();
   const [name, setName] = useState([]);
   const [fisrtname, setFisrtname] = useState([]);
   const [lastname, setLastname] = useState([]);
@@ -64,19 +65,22 @@ const Register = () => {
   const [password_confirmation, setPasswordconfirm] = useState([]);
 
   const signUp = async () => {
-    let item = {
-      name,
-      fisrtname,
-      lastname,
-      email,
-      password,
-      password_confirmation,
-    };
-    //console.warn(item);
-    let result = await axios.post("http://localhost:8000/api/register", item);
-    console.warn("result", result);
-    localStorage.setItem("Userinfo", JSON.stringify(result));
-    window.location.href = "/";
+    try {
+      let item = {
+        name,
+        fisrtname,
+        lastname,
+        email,
+        password,
+        password_confirmation,
+      };
+      //console.warn(item);
+
+      let result = await axios.post("http://localhost:8000/api/register", item);
+      console.warn("result", result);
+      localStorage.setItem("Userinfo", JSON.stringify(result));
+      window.location.href = "/";
+    } catch (err) {}
   };
 
   return (

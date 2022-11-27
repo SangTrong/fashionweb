@@ -6,7 +6,7 @@ import styled from "styled-components";
 // const Container = {marginTop: 20, backgroundColor: 'blue'}
 // <div style={Container} /> thay vi dung the div ta co the dung the do ta dinh nghia
 const Container = styled.div`
-  height: 30px;
+  height: 35px;
   background-color: teal;
   color: white;
   display: flex;
@@ -41,6 +41,6 @@ const Container = styled.div`
 //   );
 // };
 const Announcement = () => {
-  return <Container>Giảm giá 20% cho đơn hàng đầu tiên</Container>;
+  return <Container>FREESHIP CHO ĐƠN HÀNG ĐẦU TIÊN</Container>;
 };
 export default Announcement;

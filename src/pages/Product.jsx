@@ -1,4 +1,4 @@
-//import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -16,7 +16,8 @@ import { useEffect, useState } from "react";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { useLocation, useParams } from "react-router-dom";
-
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -98,26 +99,22 @@ const AddContainer = styled.div`
   ${mobile({ width: "100%" })}
 `;
 
-// const AmountContainer = styled.div`
-//   /* display: flex;
-//   align-items: center;
-//   font-weight: 700; */
-//   width: 30px;
-//   height: 30px;
-//   border-radius: 20px;
-//   display: flex;
-// `;
+const AmountContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+`;
 
-// const Amount = styled.span`
-//   width: 30px;
-//   height: 30px;
-//   border-radius: 10px;
-//   border: 1px solid teal;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   margin: 0px 5px;
-// `;
+const Amount = styled.span`
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+`;
 
 const Button = styled.button`
   padding: 15px;
@@ -180,6 +177,8 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const [color, setColor] = useState({});
   const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -199,7 +198,19 @@ const Product = () => {
         alert("Xảy ra lỗi");
       });
   }, []);
-
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      quantity < 10 && setQuantity(quantity + 1);
+    }
+  };
+  // const onChange = (value) => {
+  //   console.log("changed", value);
+  // };
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
   return (
     <Container>
       <Navbar />
@@ -250,22 +261,23 @@ const Product = () => {
             </Filter>
           </FilterContainer>
           <AddContainer>
-            {/* <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add /> 
-              
-            </AmountContainer> */}
-            <Space>
+            <AmountContainer>
+              <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
+            </AmountContainer>
+            {/* <Space>
               <InputNumber
                 size="large"
                 min={1}
                 max={10}
-                defaultValue={3}
-                onChange={onChange}
+                defaultValue={1}
+                onChange={(e) => setQuantity(e.target.value)}
               />
-            </Space>
-            <Button>THÊM VÀO GIỎ</Button>
+            </Space> */}
+            <Button type="button" onClick={handleClick}>
+              THÊM VÀO GIỎ
+            </Button>
           </AddContainer>
         </InfoContainer>
         <InfoShop>

@@ -1,11 +1,16 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import { clear } from "@testing-library/user-event/dist/clear";
+import {
+  Search,
+  ShoppingCartOutlined,
+  AccountCircle,
+} from "@material-ui/icons";
+//import userEvent from "@testing-library/user-event";
+//import { clear } from "@testing-library/user-event/dist/clear";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-
+import { useSelector } from "react-redux";
 const Container = styled.div`
   width: 100%;
   height: 70px;
@@ -71,7 +76,9 @@ const Right = styled.div`
   justify-content: flex-end;
   ${mobile({ flex: 3, justifyContent: "center", marginRight: "25px" })}
 `;
-
+const RightItem = styled.div`
+  display: flex;
+`;
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
@@ -84,6 +91,8 @@ const Navbar = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("Userinfo")));
   }, []);
+  const quantity = useSelector((state) => state.cart.quantity);
+  console.log(quantity);
   return (
     <Container>
       <Wrapper>
@@ -101,8 +110,9 @@ const Navbar = () => {
         </Center>
         <Right>
           {user ? (
-            <div>
+            <RightItem>
               <MenuItem style={{ color: "black" }}>
+                <AccountCircle fontSize="large" />
                 {user.data.user.name}
               </MenuItem>
               <MenuItem
@@ -110,25 +120,25 @@ const Navbar = () => {
                   localStorage.removeItem("Userinfo");
                   window.location.href = "/";
                 }}
-                style={{ color: "black" }}
+                style={{ color: "black", marginTop: "20px" }}
               >
-                logout
+                ĐĂNG XUẤT
               </MenuItem>
-            </div>
+            </RightItem>
           ) : (
-            <div>
+            <RightItem>
               <Link to="/register">
                 <MenuItem style={{ color: "black" }}>ĐĂNG KÝ</MenuItem>
               </Link>
               <Link to="/login">
                 <MenuItem style={{ color: "black" }}>ĐĂNG NHẬP</MenuItem>
               </Link>
-            </div>
+            </RightItem>
           )}
           <MenuItem>
             <Link to="/cart">
               <Badge
-                badgeContent={4}
+                badgeContent={quantity}
                 color="primary"
                 style={{ color: "black" }}
               >

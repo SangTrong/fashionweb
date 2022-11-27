@@ -1,4 +1,4 @@
-//import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -8,8 +8,9 @@ import "antd/dist/antd.min.css";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   font-family: Arial;
@@ -111,11 +112,11 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-// const ProductAmount = styled.div`
-//   font-size: 24px;
-//   margin: 5px;
-//   ${mobile({ margin: "5px 15px" })}
-// `;
+const ProductAmount = styled.div`
+  font-size: 24px;
+  margin: 5px;
+  ${mobile({ margin: "5px 15px" })}
+`;
 
 const ProductPrice = styled.div`
   font-size: 30px;
@@ -170,12 +171,15 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
-const onChange = (value) => {
-  //console.log("changed", value);
-};
+// const onChange = (value) => {
+//   //console.log("changed", value);
+// };
 
 const Cart = (item) => {
-  const [buttonText, setButtonText] = useState("THANH TOÁN NGAY");
+  //const [buttonText, setButtonText] = useState("THANH TOÁN NGAY");
+
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Container>
       <Navbar />
@@ -187,85 +191,39 @@ const Cart = (item) => {
             <TopButton>TIẾP TỤC MUA HÀNG</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Giỏ hàng của bạn(2)</TopText>
+            <TopText>Giỏ hàng của bạn({cart.quantity})</TopText>
             <TopText>Sản phẩm yêu thích(0)</TopText>
           </TopTexts>
-          <TopButton type="filled">THANH TOÁN</TopButton>
+          <TopButton type="filled">THÊM ƯU ĐÃI</TopButton>
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="http://labaha.vn/image/cache/catalog/Ao_nam/AO_so_mi/SM023/TB1ihxTxStYBeNjSspaXXaOOFXa_!!0-item_pic-800x800.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Sản phẩm:</b> GIÀY PUKATA
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  {/* <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove /> */}
-                  <Space>
-                    <InputNumber
-                      //size="small"
-                      min={1}
-                      max={10}
-                      defaultValue={1}
-                      value={item.qty}
-                      onChange={onChange}
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        paddingLeft: "15px",
-                      }}
-                    />
-                  </Space>
-                </ProductAmountContainer>
-                <ProductPrice> 40000đ</ProductPrice>
-              </PriceDetail>
-              <Delete>
-                <DeleteForeverIcon
-                  style={{
-                    width: "30px",
-                    height: "40px",
-                    margin: "30px",
-                  }}
-                />
-              </Delete>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://salt.tikicdn.com/cache/750x750/ts/product/15/be/4d/8388c81a1a3c40f256e9c4331cd076dd.jpg.webp" />
-                <Details>
-                  <ProductName>
-                    <b>Sản phẩm:</b> Áo sơ mi nam
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  {/* <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove /> */}
-                  <Space>
+            {cart.products.map((product) => (
+              <Product>
+                <ProductDetail>
+                  <Image
+                    src={`http://localhost:8000${product.data?.feature_image_path}`}
+                  />
+                  <Details>
+                    <ProductName>
+                      <b>Sản phẩm: </b>
+                      {product.data.name}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID:</b> {product.data.id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size:</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove />
+                    {/* /<Space>
                     <InputNumber
                       //size="large"
                       min={1}
@@ -278,38 +236,50 @@ const Cart = (item) => {
                         paddingLeft: "15px",
                       }}
                     />
-                  </Space>
-                </ProductAmountContainer>
-                <ProductPrice>50000đ</ProductPrice>
-              </PriceDetail>
-              <Delete>
-                <DeleteForeverIcon
-                  style={{
-                    width: "30px",
-                    height: "40px",
-                    margin: "30px",
-                  }}
-                />
-              </Delete>
-            </Product>
+                  </Space>  */}
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    {Number(
+                      product?.data?.price * product.quantity
+                    ).toLocaleString("vi-VN")}
+                    VNĐ
+                  </ProductPrice>
+                </PriceDetail>
+                <Delete>
+                  <DeleteForeverIcon
+                    style={{
+                      width: "30px",
+                      height: "40px",
+                      margin: "30px",
+                    }}
+                  />
+                </Delete>
+              </Product>
+            ))}
+            <Hr />
           </Info>
+
           <Summary>
             <SummaryTitle>Đơn Đặt Hàng</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Tạm Tính</SummaryItemText>
-              <SummaryItemPrice>90000đ</SummaryItemPrice>
+              <SummaryItemPrice>
+                {Number(cart.total).toLocaleString("vi-VN")} VNĐ
+              </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Phí giao hàng</SummaryItemText>
-              <SummaryItemPrice>15000đ</SummaryItemPrice>
+              <SummaryItemPrice>15.000 VNĐ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Freeship</SummaryItemText>
-              <SummaryItemPrice>15000đ</SummaryItemPrice>
+              <SummaryItemPrice>15.000 VNĐ</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Tổng Cộng</SummaryItemText>
-              <SummaryItemPrice>90000đ</SummaryItemPrice>
+              <SummaryItemPrice>
+                {Number(cart.total).toLocaleString("vi-VN")} VNĐ
+              </SummaryItemPrice>
             </SummaryItem>
             {/* <Button onClick={() => setButtonText("ĐÃ THANH TOÁN")}>
               {buttonText}
@@ -319,12 +289,12 @@ const Cart = (item) => {
               image="https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png"
               billingAddress
               shippingAddress
-              description={`Your total is 0D`}
+              description={`Your total is 90.000 VNĐ`}
               // amount="100"
               // token={''}
               //stripeKey={"123"}
             >
-              <Button>CHECKOUT NOW</Button>
+              <Button>THANH TOÁN NGAY</Button>
             </StripeCheckout>
           </Summary>
         </Bottom>

@@ -15,6 +15,7 @@ const Title = styled.h1`
 const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-top: 20px;
 `;
 const Filter = styled.div`
   margin: 20px;
@@ -47,25 +48,12 @@ const ProductList = () => {
       [e.target.name]: value,
     });
   };
-  const handleFilter = (e) => {
-    const value = e.target.value;
-    setFilters({
-      ...filters,
-      [e.target.name]: value,
-    });
-  };
+
   return (
     <Container>
       <Navbar />
       <Announcement style={{ marginTop: "70px" }} />
-      <Filter>
-        <FilterText>Quần Áo:</FilterText>
-        <Select name="name" onChange={handleFilter}>
-          <Option>None</Option>
-          <Option>Áo Sơ Mi Nam Trắng Dài tay Cổ bẻ</Option>
-          <Option>somi1.jpg</Option>
-        </Select>
-      </Filter>
+
       <FilterContainer>
         <Filter>
           <FilterText>Lọc:</FilterText>
