@@ -84,7 +84,14 @@ const Products = ({ cat, filters, sort }) => {
     <>
       <Container>
         {products?.data?.map((item) => (
-          <Product item={item} key={item.id} />
+          <Product
+            item={item}
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            price={item.price}
+            img={item.feature_image_path}
+          />
         ))}
       </Container>
       <Paging>

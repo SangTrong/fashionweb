@@ -84,56 +84,58 @@ const Register = () => {
   };
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>TẠO MỘT TÀI KHOẢN</Title>
-        <Form>
-          <Input
-            type="text"
-            value={fisrtname}
-            placeholder="tên"
-            onChange={(e) => setFisrtname(e.target.value)}
-          />
-          <Input
-            type="text"
-            value={lastname}
-            placeholder="họ"
-            onChange={(e) => setLastname(e.target.value)}
-          />
-          <Input
-            type="text"
-            value={name}
-            placeholder="tên người dùng"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Input
-            type="email"
-            value={email}
-            placeholder="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            value={password}
-            placeholder="mật khẩu"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Input
-            type="password"
-            value={password_confirmation}
-            placeholder="nhập lại mật khẩu"
-            onChange={(e) => setPasswordconfirm(e.target.value)}
-          />
-          <Agreement>
-            Bằng cách tạo một tài khoản, tôi đồng ý với việc xử lý dữ liệu phù
-            hợp với <b> CHÍNH SÁCH BẢO MẬT </b>
-          </Agreement>
-          <Button type="button" onClick={signUp}>
-            ĐĂNG KÝ
-          </Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Container>
+        <Wrapper>
+          <Title>TẠO MỘT TÀI KHOẢN</Title>
+          <Form>
+            <Input
+              type="text"
+              value={fisrtname}
+              placeholder="tên"
+              onChange={(e) => setFisrtname(e.target.value)}
+            />
+            <Input
+              type="text"
+              value={lastname}
+              placeholder="họ"
+              onChange={(e) => setLastname(e.target.value)}
+            />
+            <Input
+              type="text"
+              value={name}
+              placeholder="tên người dùng"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+              type="email"
+              value={email}
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              value={password}
+              placeholder="mật khẩu"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              type="password"
+              value={password_confirmation}
+              placeholder="nhập lại mật khẩu"
+              onChange={(e) => setPasswordconfirm(e.target.value)}
+            />
+            <Agreement>
+              Bằng cách tạo một tài khoản, tôi đồng ý với việc xử lý dữ liệu phù
+              hợp với <b> CHÍNH SÁCH BẢO MẬT </b>
+            </Agreement>
+            <Button type="button" onClick={signUp}>
+              ĐĂNG KÝ
+            </Button>
+          </Form>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

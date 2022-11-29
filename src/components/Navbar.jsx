@@ -91,8 +91,16 @@ const Navbar = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("Userinfo")));
   }, []);
-  const quantity = useSelector((state) => state.cart.quantity);
-  console.log(quantity);
+  //const quantity = useSelector((state) => state.cart.quantity);
+  const cart = useSelector((state) => state.cart);
+
+  const getTotalQuantity = () => {
+    let total = 0;
+    Array.from(cart).forEach((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
   return (
     <Container>
       <Wrapper>
@@ -138,9 +146,10 @@ const Navbar = () => {
           <MenuItem>
             <Link to="/cart">
               <Badge
-                badgeContent={quantity}
+                badgeContent={getTotalQuantity() || 0}
                 color="primary"
                 style={{ color: "black" }}
+                overlap="rectangular"
               >
                 <ShoppingCartOutlined />
               </Badge>

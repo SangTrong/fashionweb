@@ -50,45 +50,47 @@ const ProductList = () => {
   };
 
   return (
-    <Container>
-      <Navbar />
-      <Announcement style={{ marginTop: "70px" }} />
+    <>
+      <Container>
+        <Navbar />
+        <Announcement style={{ marginTop: "70px" }} />
 
-      <FilterContainer>
-        <Filter>
-          <FilterText>Lọc:</FilterText>
-          <Select name="color" onChange={handleFilters}>
-            <Option disabled>Color</Option>
-            <Option>None</Option>
-            <Option>white</Option>
-            <Option>black</Option>
-            <Option>green</Option>
-            <Option>blue</Option>
-            <Option>red</Option>
-          </Select>
-          <Select name="size" onChange={handleFilters}>
-            <Option disabled>Size</Option>
-            <Option>None</Option>
+        <FilterContainer>
+          <Filter>
+            <FilterText>Lọc:</FilterText>
+            <Select name="color" onChange={handleFilters}>
+              <Option disabled>Color</Option>
+              <Option>None</Option>
+              <Option>white</Option>
+              <Option>black</Option>
+              <Option>green</Option>
+              <Option>blue</Option>
+              <Option>red</Option>
+            </Select>
+            <Select name="size" onChange={handleFilters}>
+              <Option disabled>Size</Option>
+              <Option>None</Option>
 
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
-          </Select>
-        </Filter>
-        <Filter>
-          <FilterText>Sắp Xếp:</FilterText>
-          <Select onChange={(e) => setSort(e.target.value)}>
-            <Option value="newest">Mới nhất</Option>
-            <Option value="asc">Giá (tăng dần)</Option>
-            <Option value="desc">Giá (giảm dần)</Option>
-          </Select>
-        </Filter>
-      </FilterContainer>
-      <Products cat={cat} filters={filters} sort={sort} />
-      <Newsletter />
-      <Footer />
-    </Container>
+              <Option>S</Option>
+              <Option>M</Option>
+              <Option>L</Option>
+              <Option>XL</Option>
+            </Select>
+          </Filter>
+          <Filter>
+            <FilterText>Sắp Xếp:</FilterText>
+            <Select onChange={(e) => setSort(e.target.value)}>
+              <Option value="newest">Mới nhất</Option>
+              <Option value="asc">Giá (tăng dần)</Option>
+              <Option value="desc">Giá (giảm dần)</Option>
+            </Select>
+          </Filter>
+        </FilterContainer>
+        <Products cat={cat} filters={filters} sort={sort} />
+        <Newsletter />
+        <Footer />
+      </Container>
+    </>
   );
 };
 

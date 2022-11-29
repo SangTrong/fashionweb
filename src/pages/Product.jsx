@@ -1,4 +1,4 @@
-import { Add, Remove } from "@material-ui/icons";
+import { Add, AddAlarmTwoTone, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { useLocation, useParams } from "react-router-dom";
-import { addProduct } from "../redux/cartRedux";
+import { addToCart } from "../redux/cartSlice";
 import { useDispatch } from "react-redux";
 const Container = styled.div``;
 
@@ -172,18 +172,24 @@ const ImageMin = styled.img`
   object-fit: cover;
   ${mobile({ marginLeft: "30px" })}
 `;
+const Div = styled.span`
+  font-size: 15px;
+`;
 
 const Product = () => {
   const [product, setProduct] = useState({});
   const [color, setColor] = useState({});
   const [size, setSize] = useState("");
+  const name = product?.data?.name;
+  const price = product?.data?.price;
+  const img = product.data?.feature_image_path;
   const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   // console.log(id);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const getUserAPI = `http://localhost:8000/api/product/list/${id}`;
     axios
@@ -208,9 +214,9 @@ const Product = () => {
   // const onChange = (value) => {
   //   console.log("changed", value);
   // };
-  const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
-  };
+  // const handleClick = () => {
+  //   dispatch(addProduct({ ...product, quantity, color, size }));
+  // };
   return (
     <Container>
       <Navbar />
@@ -225,9 +231,9 @@ const Product = () => {
           <Title>{product?.data?.name}</Title>
 
           <Desc>
-            <div
+            <Div
               dangerouslySetInnerHTML={{ __html: product?.data?.content }}
-            ></div>
+            ></Div>
           </Desc>
 
           <Price>
@@ -275,7 +281,21 @@ const Product = () => {
                 onChange={(e) => setQuantity(e.target.value)}
               />
             </Space> */}
-            <Button type="button" onClick={handleClick}>
+            <Button
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    id,
+                    name,
+                    img,
+                    size,
+                    color,
+                    price,
+                    quantity,
+                  })
+                )
+              }
+            >
               THÊM VÀO GIỎ
             </Button>
           </AddContainer>

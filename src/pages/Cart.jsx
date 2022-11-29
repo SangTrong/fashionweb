@@ -9,8 +9,12 @@ import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import StripeCheckout from "react-stripe-checkout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementQuantity,
+  decrementQuantity,
+  removeItem,
+} from "../redux/cartSlice";
 
 const Container = styled.div`
   font-family: Arial;
@@ -93,6 +97,7 @@ const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: 1px solid gray;
   background-color: ${(props) => props.color};
 `;
 
@@ -178,8 +183,18 @@ const Button = styled.button`
 const Cart = (item) => {
   //const [buttonText, setButtonText] = useState("THANH TOÁN NGAY");
 
+  // const cart = useSelector((state) => state.cart);
   const cart = useSelector((state) => state.cart);
-
+  const dispatch = useDispatch();
+  const getTotal = () => {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    Array.from(cart).forEach((item) => {
+      totalQuantity += item.quantity;
+      totalPrice += item.price * item.quantity;
+    });
+    return { totalPrice, totalQuantity };
+  };
   return (
     <Container>
       <Navbar />
@@ -191,38 +206,38 @@ const Cart = (item) => {
             <TopButton>TIẾP TỤC MUA HÀNG</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Giỏ hàng của bạn({cart.quantity})</TopText>
+            <TopText>Giỏ hàng của bạn({getTotal().totalQuantity})</TopText>
             <TopText>Sản phẩm yêu thích(0)</TopText>
           </TopTexts>
           <TopButton type="filled">THÊM ƯU ĐÃI</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map((product) => (
+            {Array.from(cart)?.map((item) => (
               <Product>
                 <ProductDetail>
-                  <Image
-                    src={`http://localhost:8000${product.data?.feature_image_path}`}
-                  />
+                  <Image src={`http://localhost:8000${item.img}`} />
                   <Details>
                     <ProductName>
                       <b>Sản phẩm: </b>
-                      {product.data.name}
+                      {item.name}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b> {product.data.id}
+                      <b>ID:{item.id}</b>
                     </ProductId>
-                    <ProductColor color={product.color} />
+                    <ProductColor color={item?.color} />
                     <ProductSize>
-                      <b>Size:</b> {product.size}
+                      <b>Size:{item.size}</b>
                     </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                    <Remove
+                      onClick={() => dispatch(decrementQuantity(item.id))}
+                    />
+                    <ProductAmount>{item.quantity}</ProductAmount>
+                    <Add onClick={() => dispatch(incrementQuantity(item.id))} />
                     {/* /<Space>
                     <InputNumber
                       //size="large"
@@ -239,9 +254,7 @@ const Cart = (item) => {
                   </Space>  */}
                   </ProductAmountContainer>
                   <ProductPrice>
-                    {Number(
-                      product?.data?.price * product.quantity
-                    ).toLocaleString("vi-VN")}
+                    {Number(item.price).toLocaleString("vi-VN")}
                     VNĐ
                   </ProductPrice>
                 </PriceDetail>
@@ -252,6 +265,15 @@ const Cart = (item) => {
                       height: "40px",
                       margin: "30px",
                     }}
+                    onClick={() =>
+                      dispatch(
+                        removeItem({
+                          id: item.id,
+                          color: item.color,
+                          size: item.size,
+                        })
+                      )
+                    }
                   />
                 </Delete>
               </Product>
@@ -264,7 +286,7 @@ const Cart = (item) => {
             <SummaryItem>
               <SummaryItemText>Tạm Tính</SummaryItemText>
               <SummaryItemPrice>
-                {Number(cart.total).toLocaleString("vi-VN")} VNĐ
+                {Number(getTotal().totalPrice).toLocaleString("vi-VN")} VNĐ
               </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
@@ -278,24 +300,15 @@ const Cart = (item) => {
             <SummaryItem type="total">
               <SummaryItemText>Tổng Cộng</SummaryItemText>
               <SummaryItemPrice>
-                {Number(cart.total).toLocaleString("vi-VN")} VNĐ
+                {Number(getTotal().totalPrice).toLocaleString("vi-VN")} VNĐ
               </SummaryItemPrice>
             </SummaryItem>
             {/* <Button onClick={() => setButtonText("ĐÃ THANH TOÁN")}>
               {buttonText}
             </Button> */}
-            <StripeCheckout
-              name="A-FASHION"
-              image="https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is 90.000 VNĐ`}
-              // amount="100"
-              // token={''}
-              //stripeKey={"123"}
-            >
+            <Link to="/payment">
               <Button>THANH TOÁN NGAY</Button>
-            </StripeCheckout>
+            </Link>
           </Summary>
         </Bottom>
       </Wrapper>

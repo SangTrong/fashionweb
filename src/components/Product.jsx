@@ -5,6 +5,8 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 
 const Info = styled.div`
   opacity: 0;
@@ -69,8 +71,9 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ item }) => {
+const Product = ({ item, id, name, img, size, price }) => {
   //const [ListCategories, setListCategories] = useState([]);
+
   //   useEffect(() => {
   //   const getUserAPI = 'http://localhost:8000/admin/catogories/indexAPI'
   //     axios
@@ -91,14 +94,31 @@ const Product = ({ item }) => {
   //     </Container>
   //   );
   // };
+  // const dispatch = useDispatch();
+
   return (
     <Container>
       <Circle />
       <Image src={`http://localhost:8000${item?.feature_image_path}`} />
       <Info>
-        <Icon>
-          <ShoppingCartOutlined />
-        </Icon>
+        <Link to={"/cart"} style={{ color: "black" }}>
+          <Icon>
+            <ShoppingCartOutlined
+              type="button"
+              // onClick={() =>
+              //   dispatch(
+              //     addToCart({
+              //       id,
+              //       name,
+              //       img,
+              //       size,
+              //       price,
+              //     })
+              //   )
+              // }
+            />
+          </Icon>
+        </Link>
         <Link to={`/product/${item.id}`} style={{ color: "black" }}>
           <Icon>
             <SearchOutlined />
