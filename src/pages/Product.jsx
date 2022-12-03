@@ -82,6 +82,9 @@ const FilterColor = styled.div`
   background-color: ${(props) => props.color};
   margin: 0px 5px;
   cursor: pointer;
+  :active {
+    background-color: #a48383;
+  }
 `;
 
 const FilterSize = styled.select`

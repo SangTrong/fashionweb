@@ -5,7 +5,6 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import "antd/dist/antd.min.css";
-import { InputNumber, Space } from "antd";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -41,9 +40,10 @@ const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
+
   border: ${(props) => props.type === "filled" && "none"};
   background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
+    props.type === "filled" ? "teal" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
 `;
 
@@ -159,6 +159,7 @@ const SummaryTitle = styled.h1`
 
 const SummaryItem = styled.div`
   margin: 30px 0px;
+  border-bottom: 0.5px solid gray;
   display: flex;
   justify-content: space-between;
   font-weight: ${(props) => props.type === "total" && "500"};
@@ -170,9 +171,10 @@ const SummaryItemText = styled.span``;
 const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
-  width: 100%;
+  width: 70%;
   padding: 10px;
-  background-color: black;
+  margin-left: 50px;
+  background-color: teal;
   color: white;
   font-weight: 600;
 `;

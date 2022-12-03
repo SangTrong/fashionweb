@@ -86,8 +86,9 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const Navbar = () => {
+const Navbar = ({ search, setSearch }) => {
   const [user, setUser] = useState();
+
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("Userinfo")));
   }, []);
@@ -107,8 +108,13 @@ const Navbar = () => {
         <Left>
           <Language>VN</Language>
           <SearchContainer>
-            <Input placeholder="Tìm kiếm..." />
-            <Search style={{ color: "gray", fontSize: 16 }} />
+            <Input
+              placeholder="Tìm kiếm..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {/* {console.log(search)} */}
+            <Search type="button" style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>

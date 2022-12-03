@@ -27,28 +27,33 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const itemInCart = state.cart.find(
+      console.log("sttate", state.cart);
+      const myCart = state.cart;
+      const itemInCart = myCart.find(
         (item) =>
           item.id === action.payload.id &&
           item.color === action.payload.color &&
           item.size === action.payload.size
       );
 
+      console.log(typeof myCart);
       if (action.payload.color === "" || action.payload.size === "") {
         alert("vui lòng chọn size và color");
       } else {
         if (itemInCart) {
           itemInCart.quantity += action.payload.quantity;
         } else {
-          state.cart.push({
+          myCart.push({
             ...action.payload,
             quantity: action.payload.quantity,
           });
+          //console.log("type", typeof state.cart);
         }
       }
     },
     incrementQuantity: (state, action) => {
-      const item = state.cart.find((item) => item.id === action.payload);
+      const myCart = state.cart;
+      const item = myCart.find((item) => item.id === action.payload);
       if (item.quantity === 10) {
         item.quantity = 10;
       } else {
@@ -56,7 +61,8 @@ const cartSlice = createSlice({
       }
     },
     decrementQuantity: (state, action) => {
-      const item = state.cart.find((item) => item.id === action.payload);
+      const myCart = state.cart;
+      const item = myCart.find((item) => item.id === action.payload);
       if (item.quantity === 1) {
         item.quantity = 1;
       } else {
@@ -64,6 +70,7 @@ const cartSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
+      console.log(state);
       const removeItem = state.cart.filter(
         (item) =>
           item.id !== action.payload.id ||

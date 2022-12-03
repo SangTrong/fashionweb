@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 // import { mobile } from "../responsive";
@@ -63,7 +64,11 @@ const Register = () => {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
   const [password_confirmation, setPasswordconfirm] = useState([]);
+  // const [user, setUser] = useState();
 
+  // useEffect(() => {
+  //   setUser(JSON.parse(localStorage.getItem("Userinfo")));
+  // }, []);
   const signUp = async () => {
     try {
       let item = {
@@ -77,7 +82,6 @@ const Register = () => {
       //console.warn(item);
 
       let result = await axios.post("http://localhost:8000/api/register", item);
-      console.warn("result", result);
       localStorage.setItem("Userinfo", JSON.stringify(result));
       window.location.href = "/";
     } catch (err) {}
@@ -129,7 +133,14 @@ const Register = () => {
               Bằng cách tạo một tài khoản, tôi đồng ý với việc xử lý dữ liệu phù
               hợp với <b> CHÍNH SÁCH BẢO MẬT </b>
             </Agreement>
-            <Button type="button" onClick={signUp}>
+            <Button
+              type="button"
+              onClick={() => {
+                password === password_confirmation
+                  ? signUp()
+                  : alert("sai password");
+              }}
+            >
               ĐĂNG KÝ
             </Button>
           </Form>

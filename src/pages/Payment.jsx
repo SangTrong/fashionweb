@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCart } from "../redux/cartSlice";
+import axios from "axios";
 
 const Container = styled.div`
   font-family: Arial;
@@ -49,7 +50,7 @@ const Product = styled.div`
 `;
 
 const ProductDetail = styled.div`
-  flex: 2;
+  flex: 3;
   display: flex;
 `;
 
@@ -64,6 +65,7 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  font-size: 16px;
 `;
 
 const ProductName = styled.span``;
@@ -86,26 +88,34 @@ const PriceDetail = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+  margin-left: 10px;
 `;
 
 const ProductAmountContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const ProductAmount = styled.div`
   font-size: 16px;
-  margin: 2px;
+  margin-bottom: 10px;
+
   ${mobile({ margin: "5px 15px" })}
 `;
 
 const ProductPrice = styled.div`
   font-size: 16px;
-  margin: 2px;
+  margin-bottom: 10px;
   ${mobile({ marginBottom: "20px" })}
 `;
-const Summary = styled.div``;
+const Summary = styled.div`
+  font-size: 16px;
+`;
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
@@ -157,9 +167,74 @@ const SummaryItemPrice = styled.div`
   font-size: 20px;
 `;
 
+const order = async () => {
+  try {
+    let item = {
+      user_id: 1,
+      total: 99999999,
+      payment: "tien mat",
+      status: "Dang cho",
+      product: [
+        {
+          product_id: 2,
+          color: "gray",
+          size: "M",
+          quantity: 2,
+        },
+        {
+          product_id: 3,
+          color: "red",
+          size: "S",
+          quantity: 3,
+        },
+      ],
+    };
+    //console.warn(item);
+
+    let result = await axios.post("http://localhost:8000/api/order", item);
+    console.warn("result", result);
+  } catch (err) {}
+};
 const Cart = (item) => {
-  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const [user, setUser] = useState();
+  const [fullname, setFullname] = useState([]);
+  const [phone, setPhone] = useState([]);
+  const [address, setAddress] = useState([]);
+  const cart = useSelector((state) => state.cart);
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("Userinfo")));
+  }, []);
+  const order = async () => {
+    try {
+      let item = {
+        user_id: user.data.user.id || 1,
+        total: getTotal().totalPrice,
+        payment: "tien mat",
+        status: "Dang cho",
+        fullname: fullname || "Nguyen Van Thong",
+        address: address || "Binh Dinh",
+        phone: phone || "09037111111",
+        product: Array.from(cart).map((item) => ({
+          product_id: item.id,
+          color: item.color,
+          size: item.size,
+          quantity: item.quantity,
+        })),
+      };
+      // {
+      //   product_id: 3,
+      //   color: "red",
+      //   size: "S",
+      //   quantity: 3,
+      // },
+
+      //console.warn(item);
+
+      let result = await axios.post("http://localhost:8000/api/order", item);
+      console.warn("result", result);
+    } catch (err) {}
+  };
   const Alert = () => {
     alert("Đã thanh toán thành công!\n Cảm ơn quý khách");
   };
@@ -172,6 +247,25 @@ const Cart = (item) => {
     });
     return { totalPrice, totalQuantity };
   };
+
+  // let
+  //   const signUp = async () => {
+  //     try {
+  //       let item = {
+  //         id
+  //         fisrtname,
+  //         lastname,
+  //         email,
+  //         password,
+  //         password_confirmation,
+  //       };
+  //       //console.warn(item);
+
+  //       await axios.post("http://localhost:8000/api/register", item);
+
+  //       window.location.href = "/";
+  //     } catch (err) {}
+  //   };
   return (
     <Container>
       <Navbar />
@@ -224,12 +318,33 @@ const Cart = (item) => {
           </Info>
           <WrapperForm>
             <Form>
-              <Input type="text" placeholder="tên của bạn..." />
-              <Input type="tel" placeholder="số điện thoại..." />
-              <Input type="text" placeholder="địa chỉ..." />
+              <Input
+                type="text"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                placeholder="tên của bạn..."
+              />
+              <Input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="số điện thoại..."
+              />
+              <Input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="địa chỉ..."
+              />
               <Link to="/">
-                <Button onClick={() => dispatch(removeCart(item.id))}>
-                  <b onClick={() => Alert()}>THANH TOÁN</b>
+                <Button
+                  onClick={() =>
+                    user
+                      ? dispatch(removeCart(item.id)) && order() && Alert()
+                      : alert("vui lòng đăng nhập trước khi thanh toán")
+                  }
+                >
+                  <b>THANH TOÁN</b>
                 </Button>
               </Link>
             </Form>

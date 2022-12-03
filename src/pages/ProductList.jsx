@@ -4,89 +4,43 @@ import Announcement from "../components/Announcement";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
-import { mobile } from "../responsive";
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Container = styled.div``;
-const Title = styled.h1`
-  margin: 20px;
-`;
-const FilterContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-`;
-const Filter = styled.div`
-  margin: 20px;
-
-  ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
-`;
-const FilterText = styled.span`
-  font-size: 20px;
-  font-weight: 600;
-
-  margin-right: 20px;
-  ${mobile({ marginRight: "0px" })}
-`;
-const Select = styled.select`
-  padding: 10px;
-  margin-right: 20px;
-  ${mobile({ margin: "10px 0px" })}
-`;
-const Option = styled.option``;
 const ProductList = () => {
-  const location = useLocation();
-  const cat = location.pathname.split("/")[2];
-  const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("newest");
-
-  const handleFilters = (e) => {
-    const value = e.target.value;
-    setFilters({
-      ...filters,
-      [e.target.name]: value,
-    });
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [valueColor, setValueColor] = useState("null");
+  const [valueSize, setValueSize] = useState("null");
+  const [valueSort, setValueSort] = useState("newest");
+  const [search, setSearch] = useState("");
+  const getProducts = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/product/shared/${currentPage}/${
+          search || "null"
+        }/${valueColor || "null"}/${valueSize || "null"}/${valueSort}`
+      );
+      setProducts(res.data);
+    } catch (err) {}
   };
-
+  useEffect(() => {
+    getProducts();
+  }, [currentPage, valueColor, valueSize, valueSort, search]);
   return (
     <>
       <Container>
-        <Navbar />
+        <Navbar setSearch={setSearch} search={search} />
         <Announcement style={{ marginTop: "70px" }} />
-
-        <FilterContainer>
-          <Filter>
-            <FilterText>Lọc:</FilterText>
-            <Select name="color" onChange={handleFilters}>
-              <Option disabled>Color</Option>
-              <Option>None</Option>
-              <Option>white</Option>
-              <Option>black</Option>
-              <Option>green</Option>
-              <Option>blue</Option>
-              <Option>red</Option>
-            </Select>
-            <Select name="size" onChange={handleFilters}>
-              <Option disabled>Size</Option>
-              <Option>None</Option>
-
-              <Option>S</Option>
-              <Option>M</Option>
-              <Option>L</Option>
-              <Option>XL</Option>
-            </Select>
-          </Filter>
-          <Filter>
-            <FilterText>Sắp Xếp:</FilterText>
-            <Select onChange={(e) => setSort(e.target.value)}>
-              <Option value="newest">Mới nhất</Option>
-              <Option value="asc">Giá (tăng dần)</Option>
-              <Option value="desc">Giá (giảm dần)</Option>
-            </Select>
-          </Filter>
-        </FilterContainer>
-        <Products cat={cat} filters={filters} sort={sort} />
+        <Products
+          setCurrentPage={setCurrentPage}
+          setValueColor={setValueColor}
+          setValueSize={setValueSize}
+          setValueSort={setValueSort}
+          products={products}
+        />
         <Newsletter />
         <Footer />
       </Container>
